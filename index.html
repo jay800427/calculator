@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Aclonica|Sigmar+One&display=swap" rel="stylesheet">
+    <title>計算機</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,700&display=swap');
+           body{
+            font-family: 'Sigmar One', cursive;
+            font-family: 'Aclonica', sans-serif;
+            /* background-image: url(pencial.jpg); */
+            background-repeat: no-repeat;/*圖片不要重複*/
+            background-attachment: fixed;/*圖片固定*/
+            background-size:cover;/*圖片預設大小*/
+            opacity: 0.7;/*透明度0.7*/
+            z-index:-2;/*使圖片浮起來*/
+               }
+            td:not(#input) {
+                cursor: pointer;/*改變滑鼠指標樣式(手掌)*/
+            }
+            h1{
+                font-family: 'Noto Sans TC', sans-serif;
+                text-align:center;
+                font-size:50px;
+                color:cadetblue;
+            }
+           .tb{
+               position:absolute;
+               top:12%;
+               left:37%;
+               width:450px;
+               height:600px;
+               margin:auto;
+               text-align:center;
+               font-size:50px;
+               transform:skewX(-10deg);
+               border-radius:15px;
+               table-layout:fixed; 
+               text-overflow:clip; 
+               overflow:hidden; 
+               box-shadow: 5px 5px 10px #888888;
+               border-color:#aaaaee;
+           }
+           #table tr:nth-child(odd) { /*指定表格的第一格*/
+                color:darkslateblue;   
+             background-color:#CCEEFF;      /*星期日變紅色*/
+            } 
+            #table tr:nth-child(even) { /*指定表格的第一格*/
+                color:cornflowerblue;  
+                background-color:#FFFFBB;        /*星期日變紅色*/
+            } 
+
+            .datatable tr:hover{
+
+            background-color: #DFE7F2;
+            color: #000000;
+                }
+                
+    </style>
+</head>
+<body>
+    <h1>計算機</h1>
+    <table class="tb" id="table">
+        <tr>
+            <td colspan="4" id="input">0</td><!--刻板面-->
+        </tr>
+        <tr>
+            <td colspan="4" id="answer">0</td><!--刻板面-->
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>/</td>
+            <td>*</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td rowspan="2">+</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td rowspan="2">=</td>
+        </tr>
+        <tr>
+            <td colspan="2">0</td>
+            <td>.</td>
+        </tr>
+    </table>
+    <script>
+            let input = document.getElementById("input");//抓取(input)的這個id
+            let answer = document.getElementById("answer");//抓取(input)的這個id
+            let td = document.getElementsByTagName("td");//抓取(td)這個html標籤
+            let operator = ["+", "-", "*", "/", "Enter", "."];//建立一個陣列
+    
+            for(let i=0;i<td.length;i++){
+                if(td[i].id != "input") {
+                    td[i].onclick = () => {
+                        addNumber(td[i].innerText);
+                    }
+                }
+            }
+
+            //onkeydown 是鍵盤上輸入數字
+            document.onkeydown = (event) => {
+                let key = event.key;
+                if(!isNaN(key) || operator.includes(key)) {
+                    addNumber(key);
+                }
+            }
+    
+            let addNumber = (number) => {
+                if(number == "C"){
+                    input.innerText = "0";
+                    answer.innerText = "0";
+                }
+                else if(number == "=" || number == "Enter"){
+                    answer.innerText = eval(input.innerText);
+                }
+                else {
+                   if(input.innerText == "0") {
+                       if(number == "+" || number == "-" || number == "*" || number == "/"){
+                        input.innerText = 0;
+                       }else if(number != "."){
+                          input.innerText = number; 
+                       }else{
+                           input.innerText += number; 
+                       }
+                    }else{
+                        input.innerText += number;
+                    }
+                }
+            }
+        </script>
+</body>
+</html>
